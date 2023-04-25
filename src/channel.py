@@ -23,6 +23,27 @@ class Channel:
         self.subscriber_count = self.channel['items'][0]['statistics']['subscriberCount']
         self.video_count = self.channel['items'][0]['statistics']['videoCount']
         self.view_count = self.channel['items'][0]['statistics']['viewCount']
+    #
+    # def __str__(self):
+    #     return f"Channel('{self.title}', ({self.url})')"
+
+    def __str__(self):  # функция возвращает строку, содержащую название и URL
+        return f"{self.title} ({self.url})"
+
+    def __add__(self, other):  # функция возвращает сумму количества подписчиков
+        return int(self.subscriber_count) + int(other.subscriber_count)
+
+    def __sub__(self, other): # преобразование количества подписчиков из строки в целое число затем  вычитание
+        return int(self.subscriber_count) - int(other.subscriber_count)
+
+    def __lt__(self, other):  # метод для операции сравнения «больше»
+        return self.subscriber_count > other.subscriber_count
+
+    def __le__(self, other):  # данный метод проверяет, что количество подписчиков больше или равно
+        return self.subscriber_count >= other.subscriber_count
+
+    def __eq__(self, other):  # сравнения двух объектов класса
+        return self.subscriber_count == other.subscriber_count
 
 
     def print_info(self) -> None:
