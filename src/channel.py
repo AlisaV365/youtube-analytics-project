@@ -27,6 +27,21 @@ class Channel:
     def get_service(cls):  # возвращает объект для работы с YouTube API
         return build('youtube', 'v3', developerKey=YT_API_KEY)
 
+    def to_json(self, filename): # преобразование данных в формат json
+        data = {
+            "channel_id": self.channel_id,
+            "title": self.title,
+            "description": self.description,
+            "url": self.url,
+            "subscribers_count": self.subscriber_count,
+            "video_count": self.video_count,
+            "view_count": self.view_count
+        }
+
+        with open(filename, 'w') as file:
+            data = json.dumps(data)
+            file.write(data)
+
 
     def get_info(self) -> dict:  # получает информацию о канале
         response = self.get_service().channels().list(
@@ -38,33 +53,4 @@ class Channel:
     def print_info(self):  # выводит на экран информацию о канале
         response = self.get_info()
         print(json.dumps(response, indent=2, ensure_ascii=False))
-
-    # геттеры для атрибутов экземпляров
-    @property
-    def channel_id(self):
-        return self.__channel_id
-
-    @property
-    def title(self):
-        return self.__title
-
-    @property
-    def description(self):
-        return self.__description
-
-    @property
-    def url(self):
-        return self.__url
-
-    @property
-    def subscribers(self):
-        return self.__subscribers
-
-    @property
-    def video_count(self):
-        return self.__video_count
-
-    @property
-    def view_count(self):
-        return self.__view_count
 
