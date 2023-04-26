@@ -23,9 +23,6 @@ class Channel:
         self.subscriber_count = self.channel['items'][0]['statistics']['subscriberCount']
         self.video_count = self.channel['items'][0]['statistics']['videoCount']
         self.view_count = self.channel['items'][0]['statistics']['viewCount']
-    #
-    # def __str__(self):
-    #     return f"Channel('{self.title}', ({self.url})')"
 
     def __str__(self):  # функция возвращает строку, содержащую название и URL
         return f"{self.title} ({self.url})"
