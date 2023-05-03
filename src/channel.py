@@ -8,6 +8,7 @@ load_dotenv()
 
 YT_API_KEY = os.getenv('YT_API_KEY')
 
+
 class Channel:
     """Класс для ютуб-канала"""
     api_key = os.getenv('YT_API_KEY')
@@ -24,13 +25,16 @@ class Channel:
         self.video_count = self.channel['items'][0]['statistics']['videoCount']
         self.view_count = self.channel['items'][0]['statistics']['viewCount']
 
+    def __add__(self, other):
+        if type(other) == Channel:
+            return int(self.subscriber_count) + int(other.subscriber_count)
+        else:
+            raise TypeError
+
     def __str__(self):  # функция возвращает строку, содержащую название и URL
         return f"{self.title} ({self.url})"
 
-    def __add__(self, other):  # функция возвращает сумму количества подписчиков
-        return int(self.subscriber_count) + int(other.subscriber_count)
-
-    def __sub__(self, other): # преобразование количества подписчиков из строки в целое число затем  вычитание
+    def __sub__(self, other):  # преобразование количества подписчиков из строки в целое число затем  вычитание
         return int(self.subscriber_count) - int(other.subscriber_count)
 
     def __lt__(self, other):  # метод для операции сравнения «больше»
@@ -42,16 +46,13 @@ class Channel:
     def __eq__(self, other):  # сравнения двух объектов класса
         return self.subscriber_count == other.subscriber_count
 
-
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
         print(json.dumps(self.channel, indent=2, ensure_ascii=False))
 
-
     @classmethod
     def get_service(cls):
         return cls.youtube
-
 
     def to_json(self, file_name):
         with open(file_name, 'w', encoding='cp1251') as fh:
@@ -64,4 +65,3 @@ class Channel:
                 'video_count': self.video_count,
                 'view_count': self.view_count
             }, fh)
-
