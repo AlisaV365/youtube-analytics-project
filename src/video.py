@@ -9,7 +9,6 @@ load_dotenv()
 YT_API_KEY = os.getenv('YT_API_KEY')
 
 
-
 class Video:
     api_key = os.getenv('YT_API_KEY')
     youtube = build('youtube', 'v3', developerKey=api_key)
@@ -33,7 +32,6 @@ class Video:
         # except HttpError as error:
         #     if error.video_response == 404:
         #         print(f"Видео {self.video_id} не найдено")
-
 
     # возваращает название видео
     def __str__(self):
